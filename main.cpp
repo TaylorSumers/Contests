@@ -1,7 +1,7 @@
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <vector>
-#include <cstdint>
 
 struct Test {
   size_t id;
@@ -36,14 +36,15 @@ int main() {
   SetFastIo();
   Input();
 
-
   std::vector<Test> group_1;
   std::vector<Test> group_2;
   for (Test test : tests) {
     test.a <= test.b ? group_1.push_back(test) : group_2.push_back(test);
   }
-  std::sort(group_1.begin(), group_1.end(), [](Test t1, Test t2) { return t1.a < t2.a; }); // asc
-  std::sort(group_2.begin(), group_2.end(), [](Test t1, Test t2) { return t1.b > t2.b; }); // desc
+  std::sort(group_1.begin(), group_1.end(),
+            [](Test t1, Test t2) { return t1.a < t2.a; });  // asc
+  std::sort(group_2.begin(), group_2.end(),
+            [](Test t1, Test t2) { return t1.b > t2.b; });  // desc
 
   std::vector<size_t> permutation;
   permutation.reserve(n);
