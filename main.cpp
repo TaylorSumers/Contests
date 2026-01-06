@@ -23,7 +23,7 @@ void Input() {
   uint temp;
   for (size_t i = 0; i < n; i++) {
     std::cin >> temp;
-    tests[i].id = i;
+    tests[i].id = i + 1;
     tests[i].a = temp;
   }
   for (size_t i = 0; i < n; i++) {
@@ -42,8 +42,8 @@ int main() {
   for (Test test : tests) {
     test.a <= test.b ? group_1.push_back(test) : group_2.push_back(test);
   }
-  std::sort(group_1.begin(), group_1.end(), [](Test t1, Test t2) { return t1.a < t2.b; }); // asc
-  std::sort(group_2.begin(), group_2.end(), [](Test t1, Test t2) { return t1.a > t2.b; }); // desc
+  std::sort(group_1.begin(), group_1.end(), [](Test t1, Test t2) { return t1.a < t2.a; }); // asc
+  std::sort(group_2.begin(), group_2.end(), [](Test t1, Test t2) { return t1.b > t2.b; }); // desc
 
   std::vector<size_t> permutation;
   permutation.reserve(n);
