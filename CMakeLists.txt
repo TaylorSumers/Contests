@@ -4,5 +4,4 @@ project(Contests)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(Contests main.cpp
-        temp.cpp
 )
