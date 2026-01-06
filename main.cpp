@@ -14,7 +14,7 @@ struct Dog {
   uint b;
 
   bool operator<(const Dog& other) const {
-    return id < other.id;
+    return b != other.b ?  b < other.b : id < other.id;
   }
 };
 
@@ -44,7 +44,30 @@ void Input() {
 }
 
 bool FindDogs(uint a, uint& b_j, uint& b_k) {
+  if (dogs.size() < 2) {
+    return false;
+  }
 
+  Dog temp{0, a};
+  auto upper = dogs.lower_bound(temp);
+  if (upper == dogs.end() || upper == dogs.begin()) {
+    return false;
+  }
+  if (upper != dogs.end() && upper->b == a) {
+    ++upper;
+  }
+  auto lower = std::prev(upper);
+  if (lower->b >= a) {
+    return false;
+  }
+
+  b_j = lower->id;
+  b_k = upper->id;
+
+  dogs.erase(upper);
+  dogs.erase(lower);
+
+  return true;
 }
 
 int main() {
@@ -55,7 +78,8 @@ int main() {
   uint count = 0;
   std::vector<std::vector<uint>> res;
   for (Sheep sheep : sheeps) {
-    uint b_j, b_k;
+    uint b_j;
+    uint b_k;
     if (FindDogs(sheep.a, b_j, b_k)) {
       count++;
       res.push_back(std::vector{sheep.id, b_j, b_k});
