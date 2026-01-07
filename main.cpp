@@ -1,8 +1,7 @@
 #include <algorithm>
-#include <cstdint>
 #include <iostream>
-#include <vector>
 #include <set>
+#include <vector>
 
 struct Sheep {
   uint id;
@@ -14,7 +13,7 @@ struct Dog {
   uint b;
 
   bool operator<(const Dog& other) const {
-    return b != other.b ?  b < other.b : id < other.id;
+    return b != other.b ? b < other.b : id < other.id;
   }
 };
 
@@ -50,13 +49,13 @@ bool FindDogs(uint a, uint& b_j, uint& b_k) {
 
   Dog temp{0, a};
   auto upper = dogs.lower_bound(temp);
+  auto lower = std::prev(upper);
   if (upper == dogs.end() || upper == dogs.begin()) {
     return false;
   }
   if (upper != dogs.end() && upper->b == a) {
     ++upper;
   }
-  auto lower = std::prev(upper);
   if (lower->b >= a) {
     return false;
   }
@@ -77,17 +76,17 @@ int main() {
   std::sort(sheeps.begin(), sheeps.end(), [](const Sheep& l_sheep, const Sheep& r_sheep) { return l_sheep.a < r_sheep.a; });
   uint count = 0;
   std::vector<std::vector<uint>> res;
-  for (Sheep sheep : sheeps) {
+  for (Sheep sheep: sheeps) {
     uint b_j;
     uint b_k;
     if (FindDogs(sheep.a, b_j, b_k)) {
       count++;
-      res.push_back(std::vector{sheep.id, b_j, b_k});
+      res.push_back(std::vector{sheep.id + 1, b_j + 1, b_k + 1});
     }
   }
 
   std::cout << count << '\n';
-  for (std::vector el : res) {
+  for (std::vector el: res) {
     std::cout << el[0] << ' ' << el[1] << ' ' << el[2] << '\n';
   }
 }
