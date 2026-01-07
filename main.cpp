@@ -14,6 +14,9 @@ struct Dog {
   uint b;
 
   bool operator<(const Dog& other) const {
+    if (b != other.b) {
+      return b < other.b;
+    }
     return id < other.id;
   }
 };
@@ -44,7 +47,32 @@ void Input() {
 }
 
 bool FindDogs(uint a, uint& b_j, uint& b_k) {
+  if (dogs.size() < 2) {
+    return false;
+  }
 
+  Dog key{0, a};
+  auto upper = dogs.lower_bound(key);
+  if (upper != dogs.end() && upper->b == a) {
+    ++upper;
+  }
+  if (upper == dogs.end()) {
+    return false;
+  }
+  if (upper == dogs.begin()) {
+    return false;
+  }
+  auto lower = std::prev(upper);
+  if (lower->b >= a) {
+    return false;
+  }
+
+  b_j = lower->id;
+  b_k = upper->id;
+
+  dogs.erase(upper);
+  dogs.erase(lower);
+  return true;
 }
 
 int main() {
