@@ -53,7 +53,7 @@ bool FindDogs(uint a, uint& b_j, uint& b_k) {
   if (upper == dogs.end() || upper == dogs.begin()) {
     return false;
   }
-  if (upper != dogs.end() && upper->b == a) {
+  while (upper != dogs.end() && upper->b == a) {
     ++upper;
   }
   if (lower->b >= a) {
